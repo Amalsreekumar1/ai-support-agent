@@ -1,6 +1,6 @@
 # Decides what to do with a ticket
-from app.database import SessionLocal
 from app.models.ticket import Ticket
+from app.schemas.ticket import TicketCreate
 
 
 def create_ticket(customer_id, ticket: TicketCreate, db):
@@ -12,6 +12,7 @@ def create_ticket(customer_id, ticket: TicketCreate, db):
     )
     db.add(new_ticket)
     db.commit()
+    db.refresh(new_ticket)
     return new_ticket
 
 def get_customer_tickets(customer_id, db):
